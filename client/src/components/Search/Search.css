@@ -1,0 +1,29 @@
+.cont-input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input{
+    display: block;
+    padding: 0.7rem 2rem;
+    border-radius: 5px;
+    border: 0;
+    outline: solid 1px #917416;
+    box-shadow: 0 8px 32px 0 #917416;
+}
+
+.btn-search {
+  padding: 10px 20px;
+  background-color: #6d5710;
+  color: #fff;
+  border: none;
+  margin-left: 4%;
+  cursor: pointer;
+}
+
+.btn-search:hover {
+    background-color: #917416;
+    border-radius: 10%;
+    box-shadow: 0 8px 16px 0 #6d5710;
+}

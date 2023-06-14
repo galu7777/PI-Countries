@@ -12,7 +12,8 @@ const getCountryById = async (req, res) => {
                 },
                 include: Activity
             })
-            return res.status(200).json(data)
+            const result = [data]
+            return res.status(200).json(result)
         } else { 
             return res.status(404).send({ message: 'El id tiene que tener minimo y maximo de 3 caracteres' });
          }

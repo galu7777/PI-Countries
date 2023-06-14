@@ -8,10 +8,10 @@ const getCountriesByName = async (req, res) => {
     const foundCountries = await Country.findAll({
       where: {
         name: {
-            [Op .startsWith]: minName
+            [Op.startsWith]: minName
         },
-        include: Activity
       },
+      include: Activity
     });
     if (foundCountries.length === 0) {
       return res.status(404).send({ message: "No countries found" });

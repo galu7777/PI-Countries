@@ -1,0 +1,10 @@
+export const GET_COUNTRIES = 'GET_COUNTRIES';
+export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+export const NEXT_PAGE = 'NEXT_PAGE';
+export const PREVIOUS_PAGE = 'PREVIOUS_PAGE';
+export const FILTER = 'FILTER';
+export const ORDER = 'ORDER';
+export const ORDER_ALPHABETICALLY = 'ORDER_ALPHABETICALLY';
+export const SEARCHBYNAME = 'SEARCHBYNAME';
+export const SEARCHBYID = 'SEARCHBYID';
+export const CREATEACTIVITY = 'CREATEACTIVITY';

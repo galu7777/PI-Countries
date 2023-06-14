@@ -1,11 +1,11 @@
 require('dotenv').config();
 const axios = require('axios');
 const { URL } = process.env;
-const { Country } = require('../db');
+const { Country, Activity } = require('../db');
 
 const getCountries = async (req, response) => {
     try {
-        const country = await Country.findAll()
+        const country = await Country.findAll({ include: Activity })
         if(country.length === 0) {
             const res = await axios(URL);
             const data = res.data;
