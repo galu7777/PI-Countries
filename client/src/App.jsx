@@ -1,18 +1,34 @@
 // import Nav from './components/Nav/Nav';
 
-import { Route, Routes } from "react-router-dom"
-import Activities from "./components/Activities/Activities"
+import { useEffect, useState } from "react"
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import Countries from "./components/Countries/Countries"
 import CreatedActivity from "./components/CreatedActivity/CreatedActivity"
 import Detail from "./components/Detail/Detail"
+import LandingPage from "./components/LandingPage/LandingPage"
 import Nav from "./components/Nav/Nav"
 
 function App() {
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [access, setAccess] = useState(false)
+  
+  useEffect(() => {
+    if(access === false) {
+      navigate('/')
+    } else {
+      navigate('/home')
+    }
+  }, [access])
+
   return (
     <div>
-      <Nav/>
+      {
+        location.pathname !== '/' && <Nav/>
+      }
       <Routes>
-        <Route path="/activities" element={<Activities/> }/>
+        <Route path="/" element={<LandingPage setAccess={ setAccess } access={access}/> }/>
         <Route path="/home" element={<Countries/>}/>
         <Route path="/created" element={<CreatedActivity/>}/>
         <Route path="/detail/:id" element={<Detail/>}/>

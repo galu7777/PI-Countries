@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import { searchById } from '../Redux/actions';
 import MM from '../../assets/GIF_Mundo_Banderas.gif'
 import './Detail.css';
@@ -15,10 +15,12 @@ function Detail({ countries }) {
     dispatch(searchById(id))
   }, [searchById])
   
+  console.log(countries)
   const country = countries[0];
-  console.log(country)
+  const Name = country?.name.charAt(0).toUpperCase() + country?.name.slice(1);
+  const Capital = country?.capital.charAt(0).toUpperCase() + country?.capital.slice(1);
+
   const activities = country?.Activities;
-  console.log(activities)
 
   return (
     <div className="cont-detail">
@@ -27,21 +29,48 @@ function Detail({ countries }) {
           <img src={MM} alt="RM" className="logo-detail"/>
         </div>
         <h5 className="desc">Id: {country?.id}</h5>
-        <h5 className="desc">Name: {country?.name}</h5>
+        <h5 className="desc">Name: {Name}</h5>
         <h5 className="desc">Continent: {country?.continent}</h5>
-        <h5 className="desc">Capital: {country?.capital}</h5>
+        <h5 className="desc">Capital: {Capital}</h5>
         <h5 className="desc">Population: {Number(country?.population).toLocaleString()}</h5>
         <div className='container-des'>
           <h5 className='title'> Activities </h5>
-          {
+          {/* {
               activities.length !== 0 || !activities             
               ? activities.map((activity) => (
                 <div key={activity?.id} className='ctn-activity'>
                   <h5 className='desc-act'>Activity: { activity?.name }</h5>
                   <h5 className='desc-act'>Season: { activity?.season }</h5>
                 </div>
-              )) : <h5 className='desc'>There are no activities registered in { country?.name } </h5> 
-          }
+              )) : <h5 className='desc-reg-act'>There are no activities registered in { country?.name } </h5> 
+          } */}
+
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <table className="ctn-table-countries">
+                <thead>
+                  <tr>
+                    <th>Activity</th>
+                    <th>Season</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    activities.length !== 0 || !activities
+                    ? activities.map((activity) => (
+                      <tr key={activity}>
+                        <td>
+                          { activity.name }
+                        </td>
+                        <td>
+                          { activity.season }
+                        </td>
+                      </tr>                      
+                    )) : <h5 className='desc-reg-act'>There are no activities registered in { country?.name } </h5>
+                  }
+                </tbody>
+              </table>
+           </div>
+          
         </div>
       </div>
       

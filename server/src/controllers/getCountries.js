@@ -40,7 +40,8 @@ const getCountries = async (req, response) => {
         return response.status(200).json(country)
 
     } catch (error) {
-        return response.status(404).send({ message: error.message })
+        response.status = 404
+        return response.send({ message: error.message })
     }
 };
 

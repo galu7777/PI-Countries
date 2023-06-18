@@ -24,7 +24,8 @@ function Countries({
   previousPage, 
   filterCountries, 
   orderCountries, 
-  orderAlphabetically }) {
+  orderAlphabetically }) {  
+
   useEffect(() => {
     getCountries();
   }, [getCountries]);
@@ -52,7 +53,8 @@ function Countries({
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  const currentPageObjects = countries.slice(startIndex, endIndex);
+  // const currentPageObjects = countries.slice(startIndex, endIndex);
+  const currentPageObjects = countries && Array.isArray(countries) ? countries.slice(startIndex, endIndex) : [];
 
   return (
     <div className='container'>
@@ -126,9 +128,9 @@ Countries.propTypes = {
   countries: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      image_flag: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      continent: PropTypes.string.isRequired,
+      image_flag: PropTypes.string,
+      name: PropTypes.string,
+      continent: PropTypes.string,
     })
   ),
   currentPage: PropTypes.number.isRequired,

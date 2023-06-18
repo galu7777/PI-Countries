@@ -9,13 +9,14 @@ function CreatedActivity({ countries, createActivity }) {
   
   const navigate = useNavigate()
   const [newActivity, setNewActivity] = useState({
-    CountryId: '',
+    countries: [],
     name: '',
     difficulty: '',
     season: '',
   });
 
   const seasons = [
+    { id: 0, name: 'Default' },
     { id: 1, name: 'Spring' },
     { id: 2, name: 'Summer' },
     { id: 3, name: 'Fall' },
@@ -23,12 +24,15 @@ function CreatedActivity({ countries, createActivity }) {
   ];
   
   const difficulties = [
+    { value: 'Default' },
     { value: '1' },
     { value: '2' },
     { value: '3' },
     { value: '4' },
     { value: '5' },
   ];
+
+  const nations = [ { id: 0, name: 'Dafault' }, ...countries ]
 
   const handleChangeName = (event) => {
     setNewActivity({ ...newActivity, name: event.target.value });
@@ -43,13 +47,39 @@ function CreatedActivity({ countries, createActivity }) {
   };
 
   const handleChangeCountryId = (event) => {
-    setNewActivity({ ...newActivity, CountryId: event.target.value });
+    const selectedCountryId = event.target.value;
+    if (!newActivity.countries.includes(selectedCountryId)) {
+      setNewActivity((prevState) => ({
+        ...prevState,
+        countries: [...prevState.countries, selectedCountryId],
+      }));
+    }
   };
+
+  const handleRemoveCountry = (countryId) => {
+    setNewActivity((prevState) => ({
+      ...prevState,
+      countries: prevState.countries.filter((id) => id !== countryId),
+    }));
+  };  
+  
 
   const submitHandler = async (event) => {
     event.preventDefault();
-    console.log(newActivity)
-    createActivity(newActivity);
+
+    if (newActivity.countries.length === 0) {
+      alert("Please select at least one country.");
+      return;
+    }
+  
+    newActivity.countries.forEach((countryId) => {
+      const activityData = {
+        ...newActivity,
+        CountryId: countryId,
+      };
+      createActivity(activityData);
+    });
+    
     alert('Your activity has been created!');
     navigate('/home')
   };
@@ -115,31 +145,62 @@ function CreatedActivity({ countries, createActivity }) {
                 </div>
             </div>
 
-            <div className='input-container'>
-                <label htmlFor="difficulty" className="top-label">
-                   Country:
-                </label>
-                <div className="select">
-                <select 
-                    className="select-origin"
-                    value={ newActivity.CountryId }
-                    onChange={handleChangeCountryId}
+            <div className="input-container">
+              <label htmlFor="countries" className="top-label">
+                Countries:
+              </label>
+              <div className="select">
+                <select
+                  className="select-origin"
+                  value={newActivity.countries}
+                  onChange={handleChangeCountryId}
                 >
-                    {countries.map((country, index) => (
-                        <option key={index} value={country.id}>
-                            {country.name}
-                        </option>
-                    ))}
+                  {nations.map((nation, index) => (
+                    <option key={index} value={nation.id}>
+                      {nation.name}
+                    </option>
+                  ))}
                 </select>
-                </div>
+              </div>
             </div>
+                    
+
 
             <div className='input-container'>
                 <button type='submit' className='btn'>Create</button>
-            </div>
-            
+            </div>            
 
           </div>
+          
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <table className="ctn-table-countries">
+                <thead>
+                  <tr>
+                    <th>Country</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    newActivity.countries.map((countryId) => (
+                      <tr key={countryId}>
+                        <td>
+                          { countries.find((country) => country.id === countryId)?.name }
+                        </td>
+                        <td
+                          className='td-cursor' 
+                          type='button'
+                          onClick={() => handleRemoveCountry(countryId)}
+                        >
+                          X
+                        </td>
+                      </tr>                      
+                    ))
+                  }
+                </tbody>
+              </table>
+          </div>
+
         </form>
 
       </div>

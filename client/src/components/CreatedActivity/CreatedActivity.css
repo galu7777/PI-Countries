@@ -19,80 +19,98 @@
       box-shadow: 0 8px 32px 0 rgb(243, 247, 60);
       margin-top: 3%;
     }
-  
+
     .ctn-checkbox {
       display: flex;
       flex-wrap: wrap;
       margin-top: 4%;
     }
-  
+
     .ctn-checkbox > * {
       flex-basis: 25%; /* Ancho de cada columna (25% para 4 columnas) */
       box-sizing: border-box;
     }
-  
+
     .ctn-input {
       display: flex;
       flex-wrap: wrap;
       margin-top: 4%;
       margin-bottom: 4%;
     }
-  
+
     .ctn-input > * {
       flex-basis: 20%;
       box-sizing: border-box;
     }
-  
+
     .top-label {
       pointer-events: none;
       left: 10px;
       transition: 0.2s ease-out;
       color: white;
       font-size: 18px;
+      margin-left: 2%;
     }
-    
+
     .input-container {
       position: relative;
       margin-bottom: 20px;
       margin-left: 10px;
       margin-right: 10px;
     }
-  
+
     .label-check {
       font-size: 19px;
-      color: #fff; 
+      color: #fff;
     }
-  
+
     .ctn-button {
       display: flex;
       justify-content: center;
       align-items: center;
       margin-top: 5%;
     }
+
+  .ctn-table-countries {
+    border: solid 1px #fff;
+    width: 50%;
+  }
+
+  table {
+    color: #fff;
+    font-size: 14px;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background-color: #917416;
+  }
+
+  th {
+    padding: 12px 50px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  td {
+    padding: 15px;
+    border-bottom: solid 1px #fff;
+    text-align: center;
+  }
+  .td-cursor {
+    cursor: pointer;
+    color: red;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .td-cursor:hover {
+    font-size: 17px;
+  }
   
-  .btn-landing{
-      position: relative;
-      background: #fff;
-      color: #fff;
-      text-transform: uppercase;
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      font-weight: 400;
-      padding: 10px 30px;
-      transition: 0.5s;
-    }
-    
-    .btn-landing:hover{
-      background: #f17752;
-      color: #f17752;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      box-shadow: 0 0 35px #f17752;
-    }
-    
-    .btn-landing:before{
-      content: '';
-      position: absolute;
-      inset: 2px;
-      background: #27282c;
-    }
+
+  tbody tr:hover {
+    background-color: #ac8a1b;
+  }
+

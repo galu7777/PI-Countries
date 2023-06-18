@@ -67,6 +67,13 @@
     color: rgb(243, 247, 60);
 }
 
+.desc-reg-act{
+    text-align: center;
+    font-size: 23px;
+    color: white;
+    margin-bottom: 35px;
+}
+
 .logo-detail {
     margin: 6%;
 }
