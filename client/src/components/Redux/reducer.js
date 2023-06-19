@@ -42,8 +42,6 @@ const reducer = (state = stateInitial, { type, payload }) => {
         case CREATEACTIVITY:
             return {
                 ...state,
-                countries: payload,
-                allCountries: payload,
                 activities: payload
             };
 
@@ -74,7 +72,15 @@ const reducer = (state = stateInitial, { type, payload }) => {
             return state;
 
         case FILTER: {
-            const allCountriesFiltered = state.allCountries.filter((country) => country.continent === payload)
+            if( payload === 'activity' ){
+                const allActivitiesFiltered = state.allCountries.filter((country) => country.Activities.length > 0)
+                return {
+                    ...state,
+                    countries:
+                        allActivitiesFiltered
+                }
+            }
+             const allCountriesFiltered = state.allCountries.filter((country) => country.continent === payload)
             // const allCountriesFiltered = state.countries.filter((country) => country.Activity === payload)
                 return {
                     ...state,

@@ -13,6 +13,7 @@ function CreatedActivity({ countries, createActivity }) {
     name: '',
     difficulty: '',
     season: '',
+    duration: ''
   });
 
   const seasons = [
@@ -32,6 +33,22 @@ function CreatedActivity({ countries, createActivity }) {
     { value: '5' },
   ];
 
+  const duration = [
+    { value: 'Default' },
+    { value: '1' },
+    { value: '2' },
+    { value: '3' },
+    { value: '4' },
+    { value: '5' },
+    { value: '6' },
+    { value: '7' },
+    { value: '8' },
+    { value: '9' },
+    { value: '10' },
+    { value: '11' },
+    { value: '12' }
+  ];
+
   const nations = [ { id: 0, name: 'Dafault' }, ...countries ]
 
   const handleChangeName = (event) => {
@@ -44,6 +61,10 @@ function CreatedActivity({ countries, createActivity }) {
 
   const handleChangeSeason = (event) => {
     setNewActivity({ ...newActivity, season: event.target.value });
+  };
+
+  const handleChangeDuration = (event) => {
+    setNewActivity({ ...newActivity, duration: event.target.value });
   };
 
   const handleChangeCountryId = (event) => {
@@ -78,8 +99,8 @@ function CreatedActivity({ countries, createActivity }) {
         CountryId: countryId,
       };
       createActivity(activityData);
+      console.log(activityData)
     });
-    
     alert('Your activity has been created!');
     navigate('/home')
   };
@@ -163,10 +184,29 @@ function CreatedActivity({ countries, createActivity }) {
                 </select>
               </div>
             </div>
+
+            <div className="input-container">
+              <label htmlFor="countries" className="top-label">
+                Duration:
+              </label>
+              <div className="select">
+                <select
+                  className="select-origin"
+                  value={newActivity.duration}
+                  onChange={handleChangeDuration}
+                >
+                  {duration.map((duration, index) => (
+                    <option key={index} value={duration.value}>
+                      {duration.value} hours
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
                     
 
 
-            <div className='input-container'>
+            <div className='btn-create-container'>
                 <button type='submit' className='btn'>Create</button>
             </div>            
 

@@ -18,9 +18,21 @@ function Search() {
     } else dispatch(searchByName(searchQuery))
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter'){
+      onSearch();
+    }
+  };
+
   return (
     <div className='cont-input'>
-        <input type="search" className='input' value={searchQuery} onChange={handleChangeSearchQuery}/>
+        <input 
+          type="search"
+          className='input'
+          value={searchQuery}
+          onChange={handleChangeSearchQuery}
+          onKeyPress={handleKeyPress}
+        />
         <button className='btn-search' onClick={onSearch}>Search</button>
     </div>
   )

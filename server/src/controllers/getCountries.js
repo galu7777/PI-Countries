@@ -13,8 +13,11 @@ const getCountries = async (req, response) => {
                 
                 const continent = country.continents[0].toLowerCase();
                 const name = country.name.common.toLowerCase();
+                const area = country.area;
+
                 let id = '';  
                 let capital = 'sin informacion';
+                let subregion = 'sin informacion'
                 
                 if (country.cca3.length > 0) {
                     id = country.cca3;
@@ -23,6 +26,10 @@ const getCountries = async (req, response) => {
                 if (Array.isArray(country.capital) && country.capital.length > 0) {
                     capital = country.capital[0].toLowerCase();
                 }
+
+                if (country.subregion) {
+                    subregion = country.subregion.toLowerCase();
+                }
                 
                 return {
                     id,
@@ -30,6 +37,8 @@ const getCountries = async (req, response) => {
                     image_flag: country.flags.svg,
                     continent,
                     capital,
+                    subregion,
+                    area,
                     population: country.population
                 }
             })

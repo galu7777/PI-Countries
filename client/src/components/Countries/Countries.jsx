@@ -55,7 +55,8 @@ function Countries({
   const endIndex = startIndex + pageSize;
   // const currentPageObjects = countries.slice(startIndex, endIndex);
   const currentPageObjects = countries && Array.isArray(countries) ? countries.slice(startIndex, endIndex) : [];
-
+  console.log(countries)
+        
   return (
     <div className='container'>
       <h1 style={{ color: 'white', marginTop: '2%' }}>Home</h1>
@@ -86,7 +87,7 @@ function Countries({
             <option value="south america">south america</option>
             <option value="antarctica">antarctica</option>
             <option value="allCountries">all Countries</option>
-            <option value="Activity">Activity</option>
+            <option value="activity">Activity</option>
             {/* <option value="Genderless">Genderless</option>
             <option value="unknown">unknown</option>
             <option value="allCharacters">allCharacters</option> */}
@@ -104,7 +105,6 @@ function Countries({
             image_flag={country.image_flag}
             name={country.name}
             continent={country.continent}
-            population={country.population}
           />
         ))}
       </div>

@@ -18,57 +18,61 @@ function Detail({ countries }) {
   console.log(countries)
   const country = countries[0];
   const Name = country?.name.charAt(0).toUpperCase() + country?.name.slice(1);
+  const Continent = country?.continent.charAt(0).toUpperCase() + country?.continent.slice(1);
   const Capital = country?.capital.charAt(0).toUpperCase() + country?.capital.slice(1);
+  const SubRegion = country?.subregion.charAt(0).toUpperCase() + country?.subregion.slice(1);
 
   const activities = country?.Activities;
 
   return (
     <div className="cont-detail">
       <div className="container-des">
-        <div>
+        <div className='ctn-logo'>
           <img src={MM} alt="RM" className="logo-detail"/>
         </div>
         <h5 className="desc">Id: {country?.id}</h5>
         <h5 className="desc">Name: {Name}</h5>
-        <h5 className="desc">Continent: {country?.continent}</h5>
+        <h5 className="desc">Continent: {Continent}</h5>
         <h5 className="desc">Capital: {Capital}</h5>
+        <h5 className="desc">Sub Region: {SubRegion}</h5>
+        <h5 className="desc">Area: {Number(country?.area).toLocaleString()} km²</h5>
         <h5 className="desc">Population: {Number(country?.population).toLocaleString()}</h5>
         <div className='container-des'>
           <h5 className='title'> Activities </h5>
-          {/* {
-              activities.length !== 0 || !activities             
-              ? activities.map((activity) => (
-                <div key={activity?.id} className='ctn-activity'>
-                  <h5 className='desc-act'>Activity: { activity?.name }</h5>
-                  <h5 className='desc-act'>Season: { activity?.season }</h5>
-                </div>
-              )) : <h5 className='desc-reg-act'>There are no activities registered in { country?.name } </h5> 
-          } */}
-
+          
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <table className="ctn-table-countries">
-                <thead>
-                  <tr>
-                    <th>Activity</th>
-                    <th>Season</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {
-                    activities.length !== 0 || !activities
-                    ? activities.map((activity) => (
-                      <tr key={activity}>
-                        <td>
-                          { activity.name }
-                        </td>
-                        <td>
-                          { activity.season }
-                        </td>
-                      </tr>                      
-                    )) : <h5 className='desc-reg-act'>There are no activities registered in { country?.name } </h5>
-                  }
-                </tbody>
-              </table>
+              {
+                  activities.length !== 0 || !activities
+                  
+                  ? <table className="ctn-table-detail">
+                      <thead>
+                        <tr>
+                          <th>Activity</th>
+                          <th>Season</th>
+                          <th>Duration</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {
+                          
+                          activities.map((activity) => (
+                            <tr key={activity}>
+                              <td>
+                                { activity.name }
+                              </td>
+                              <td>
+                                { activity.season }
+                              </td><td>
+                                { activity.duration } Hours
+                              </td>
+                            </tr>                      
+                          ))
+                        }
+                      </tbody>
+                    </table>
+
+                : <h5 className='desc-reg-act'>There are no activities registered in { country?.name } </h5>
+              }
            </div>
           
         </div>
@@ -92,6 +96,8 @@ Detail.propTypes = {
           image_flag: PropTypes.string.isRequired,
           continent: PropTypes.string.isRequired,
           capital: PropTypes.string.isRequired,
+          subregion: PropTypes.string.isRequired,
+          area: PropTypes.string.isRequired,
           population: PropTypes.string.isRequired,
           Activities: PropTypes.arrayOf(
             PropTypes.shape({

@@ -1,14 +1,14 @@
 const { Activity } = require('../db');
 
 const postActivity = async(req, res) => {
-    const { CountryId, name, difficulty, season } = req.body;
+    const { CountryId, name, difficulty, season, duration } = req.body;
     try {
         if( difficulty < 1 || difficulty > 5  ) {
             throw new Error('the difficulty has to have a rank between 1 to 5')
         };
 
         const newActivity = {
-            name, difficulty, season
+            name, difficulty, season, duration
         };
 
         const createActivity = await Activity.create(newActivity);

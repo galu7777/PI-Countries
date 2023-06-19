@@ -59,6 +59,11 @@
       margin-right: 10px;
     }
 
+    .btn-create-container {
+      position: relative;
+      margin-top: 8%;
+    }
+
     .label-check {
       font-size: 19px;
       color: #fff;
