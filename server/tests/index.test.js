@@ -1,9 +1,24 @@
-const router = require('../src/routes/index.js');
 const request = require('supertest');
+const express = require('express');
 
-describe('Pruba de Status de ruta', () => {
-    test('la ruta deberia responder con status 200', async () => {
-        const response = await request(router).get('/acti')
-        expect(response.statusCode).send(200)
-    })
-})
+const router = require('../src/routes/index');
+
+const app = express();
+app.use('/', router);
+
+describe('Routes', () => {
+  test('GET / should return status 200', async () => {
+    const response = await request(app).get('/');
+    expect(response.status).toBe(200);
+  });
+
+  test('GET /acti should return status 200', async () => {
+    const response = await request(app).get('/acti');
+    expect(response.status).toBe(200);
+  });
+
+  test('GET /:id should return status 200', async () => {
+    const response = await request(app).get('/123');
+    expect(response.status).toBe(200);
+  });
+});

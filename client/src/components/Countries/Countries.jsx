@@ -53,10 +53,8 @@ function Countries({
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  // const currentPageObjects = countries.slice(startIndex, endIndex);
   const currentPageObjects = countries && Array.isArray(countries) ? countries.slice(startIndex, endIndex) : [];
-  console.log(countries)
-        
+          
   return (
     <div className='container'>
       <h1 style={{ color: 'white', marginTop: '2%' }}>Home</h1>
