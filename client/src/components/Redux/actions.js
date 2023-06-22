@@ -1,14 +1,15 @@
 import axios from 'axios';
 import { GET_COUNTRIES,
-         SEARCHBYNAME,         
-         SEARCHBYID, 
+         SEARCH_BY_NAME,         
+         SEARCH_BY_ID, 
          SET_CURRENT_PAGE, 
          NEXT_PAGE, 
          PREVIOUS_PAGE, 
          FILTER, 
          ORDER,
          ORDER_ALPHABETICALLY,
-         CREATEACTIVITY
+         CREATE_ACTIVITY,
+         DELETE_ACTIVITY
          } from './actions-types';
 
 export const getCountries = () => {
@@ -28,9 +29,9 @@ export const searchByName = (name) => {
         try {
             const response = await axios(`http://localhost:3001/countries/search?name=${name}`);
             const data = response.data;
-            dispatch({ type: SEARCHBYNAME, payload: data })
+            dispatch({ type: SEARCH_BY_NAME, payload: data })
         } catch (error) {
-            console.log('Error: ', error)
+            console.log('Error searching by name: ', error)
         }
     };
 }
@@ -40,11 +41,23 @@ export const searchById = (id) => {
         try {
             const response = await axios(`http://localhost:3001/countries/${id}`);
             const data = response.data;
-            dispatch({ type: SEARCHBYID, payload: data })
+            dispatch({ type: SEARCH_BY_ID, payload: data })
         } catch (error) {
-            console.log('Error: ', error)
+            console.log('Error searching by Id: ', error)
         }
     };
+}
+
+export const deleteActivity = (id) => {
+    return async (dispatch) => {
+        try {
+            const response = await axios.delete(`http://localhost:3001/countries/acti/${id}`);
+            const data = response.data;
+            dispatch({ type: DELETE_ACTIVITY, payload: data })
+        } catch (error) {
+            console.log('Error deleting activity: ', error )
+        }
+    }
 }
 
 export const createActivity = (Activity) => {
@@ -53,12 +66,13 @@ export const createActivity = (Activity) => {
         try {
             const response = await axios.post(endpoint, Activity);
             const data = response.data;
-            dispatch({ type: CREATEACTIVITY, payload: data })
+            dispatch({ type: CREATE_ACTIVITY, payload: data })
         } catch (error) {
-            console.log('Error al crear la activity: ', error )
+            console.log('Error creating activity: ', error )
         }
     }
 }
+
 
 
 export const setCurrentPage = (page) => {

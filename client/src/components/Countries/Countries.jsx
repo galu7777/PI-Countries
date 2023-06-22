@@ -8,7 +8,8 @@ import {
   previousPage, 
   filterCountries, 
   orderCountries, 
-  orderAlphabetically 
+  orderAlphabetically, 
+  setCurrentPage
 } from '../Redux/actions';
 import './Countries.css';
 import { NavLink } from 'react-router-dom';
@@ -19,6 +20,7 @@ function Countries({
   currentPage, 
   pageSize, 
   totalPages,
+  setCurrentPage,
   getCountries, 
   nextPage, 
   previousPage, 
@@ -50,11 +52,51 @@ function Countries({
     filterCountries(event.target.value);
   };
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const currentPageObjects = countries && Array.isArray(countries) ? countries.slice(startIndex, endIndex) : [];
           
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+
+    if (totalPages <= 3) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else if (currentPage <= 2) {
+      for (let i = 1; i <= 3; i++) {
+        pageNumbers.push(i);
+      }
+    } else if (currentPage >= totalPages - 1) {
+      for (let i = totalPages - 2; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+        pageNumbers.push(i);
+      }
+    }
+
+    return (
+      <div className="page-numbers">
+        {pageNumbers.map((pageNumber) => (
+          <button
+            key={pageNumber}
+            className={`page-number ${pageNumber === currentPage ? 'active' : ''}`}
+            onClick={() => handlePageChange(pageNumber)}
+          >
+            {pageNumber}
+          </button>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className='container'>
       <h1 style={{ color: 'white', marginTop: '2%' }}>Home</h1>
@@ -86,9 +128,6 @@ function Countries({
             <option value="antarctica">antarctica</option>
             <option value="allCountries">all Countries</option>
             <option value="activity">Activity</option>
-            {/* <option value="Genderless">Genderless</option>
-            <option value="unknown">unknown</option>
-            <option value="allCharacters">allCharacters</option> */}
           </select>
         </div>
         <NavLink to='/created' element={<CreatedActivity/>}>
@@ -118,6 +157,7 @@ function Countries({
           </button>
         </div>
       </div>
+      {renderPageNumbers()}
     </div>
   );
 }
@@ -133,6 +173,7 @@ Countries.propTypes = {
   ),
   currentPage: PropTypes.number.isRequired,
   pageSize: PropTypes.number.isRequired,
+  setCurrentPage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
   getCountries: PropTypes.func.isRequired,
   nextPage: PropTypes.func.isRequired,
@@ -157,6 +198,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getCountries: () => dispatch(getCountries()),
     nextPage: () => dispatch(nextPage()),
+    setCurrentPage: (pageNumber) => dispatch(setCurrentPage(pageNumber)),
     previousPage: () => dispatch(previousPage()),
     filterCountries: (continent) => dispatch(filterCountries(continent)),
     orderCountries: (order) => dispatch(orderCountries(order)),

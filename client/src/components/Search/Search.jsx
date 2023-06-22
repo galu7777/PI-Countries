@@ -16,6 +16,7 @@ function Search() {
     if(searchQuery.length === 3) {
       dispatch(searchById(searchQuery))
     } else dispatch(searchByName(searchQuery))
+    setSearchQuery('')
   };
 
   const handleKeyPress = (event) => {
@@ -30,6 +31,7 @@ function Search() {
           type="search"
           className='input'
           value={searchQuery}
+          placeholder="Write a Name or Id"
           onChange={handleChangeSearchQuery}
           onKeyPress={handleKeyPress}
         />

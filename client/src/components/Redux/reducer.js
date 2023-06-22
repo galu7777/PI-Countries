@@ -5,9 +5,10 @@ import { GET_COUNTRIES,
          FILTER, 
          ORDER, 
          ORDER_ALPHABETICALLY, 
-         SEARCHBYNAME,
-         SEARCHBYID,
-         CREATEACTIVITY
+         SEARCH_BY_NAME,
+         SEARCH_BY_ID,
+         CREATE_ACTIVITY,
+         DELETE_ACTIVITY
         } from "./actions-types";
 
 const stateInitial = {
@@ -27,23 +28,29 @@ const reducer = (state = stateInitial, { type, payload }) => {
                 allCountries: payload
             };
 
-        case SEARCHBYNAME:
+        case SEARCH_BY_NAME:
             return {
                 ...state,
                 countries: payload,
             };
 
-        case SEARCHBYID:
+        case SEARCH_BY_ID:
             return {
                 ...state,
                 countries: payload,
             };
 
-        case CREATEACTIVITY:
+        case CREATE_ACTIVITY:
             return {
                 ...state,
                 activities: payload
             };
+
+        case DELETE_ACTIVITY:
+            return {
+                ...state,
+                activities: payload,
+            }
 
         case SET_CURRENT_PAGE:
             return {

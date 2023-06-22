@@ -16,6 +16,12 @@ function CreatedActivity({ countries, createActivity }) {
     duration: ''
   });
 
+  const [error, setError] = useState('')
+  const [errorSelectDifficulty, setErrorSelectDifficulty] = useState('')
+  const [errorSelectSeason, setErrorSelectSeason] = useState('')
+  const [errorSelectCountryId, setErrorSelectCountryId] = useState('')
+  const [errorSelectDuration, setErrorSelectDuration] = useState('')
+
   const seasons = [
     { id: 0, name: 'Default' },
     { id: 1, name: 'Spring' },
@@ -49,25 +55,51 @@ function CreatedActivity({ countries, createActivity }) {
     { value: '12' }
   ];
 
-  const nations = [ { id: 0, name: 'Dafault' }, ...countries ]
+  const nations = [ { id: 0, name: 'Default' }, ...countries ]
 
   const handleChangeName = (event) => {
+    newActivity.name.length < 3
+    ? setError('The name of the Activity must be greater than 3 characters')
+    : setError('')
+
     setNewActivity({ ...newActivity, name: event.target.value });
   };
 
   const handleChangeDifficulty = (event) => {
-    setNewActivity({ ...newActivity, difficulty: event.target.value });
+    const selectedDifficulty = event.target.value;
+    setNewActivity({ ...newActivity, difficulty: selectedDifficulty });
+  
+    if (selectedDifficulty === 'Default') {
+      setErrorSelectDifficulty("You cannot select the 'Default' value to submit the form");
+    } else {
+      setErrorSelectDifficulty('');
+    }
   };
-
+  
   const handleChangeSeason = (event) => {
-    setNewActivity({ ...newActivity, season: event.target.value });
+    const selectedSeason = event.target.value;
+    setNewActivity({ ...newActivity, season: selectedSeason });
+  
+    if (selectedSeason === 'Default') {
+      setErrorSelectSeason("You cannot select the 'Default' value to submit the form");
+    } else {
+      setErrorSelectSeason('');
+    }
   };
-
+  
   const handleChangeDuration = (event) => {
-    setNewActivity({ ...newActivity, duration: event.target.value });
+    const selectedDuration = event.target.value;
+    setNewActivity({ ...newActivity, duration: selectedDuration });
+  
+    if (selectedDuration === 'Default') {
+      setErrorSelectDuration("You cannot select the 'Default' value to submit the form");
+    } else {
+      setErrorSelectDuration('');
+    }
   };
+  
 
-  const handleChangeCountryId = (event) => {
+  const handleChangeCountryId = (event) => {    
     const selectedCountryId = event.target.value;
     if (!newActivity.countries.includes(selectedCountryId)) {
       setNewActivity((prevState) => ({
@@ -75,6 +107,13 @@ function CreatedActivity({ countries, createActivity }) {
         countries: [...prevState.countries, selectedCountryId],
       }));
     }
+    
+    if (selectedCountryId === '0') {
+      setErrorSelectCountryId("You cannot select the 'Default' value to submit the form");
+    } else {
+      setErrorSelectCountryId('');
+    }
+
   };
 
   const handleRemoveCountry = (countryId) => {
@@ -91,15 +130,18 @@ function CreatedActivity({ countries, createActivity }) {
     if (newActivity.countries.length === 0) {
       alert("Please select at least one country.");
       return;
+    }    
+    if (newActivity.duration.length === 0) {
+      alert("Please select the duration.");
+      return;
     }
-  
+
     newActivity.countries.forEach((countryId) => {
       const activityData = {
         ...newActivity,
         CountryId: countryId,
       };
       createActivity(activityData);
-      console.log(activityData)
     });
     alert('Your activity has been created!');
     navigate('/home')
@@ -126,6 +168,7 @@ function CreatedActivity({ countries, createActivity }) {
                 onChange={handleChangeName}
                 autoFocus 
                />
+               {error && <p style={{color: 'red', fontSize: '14px'}}>{error}</p>}
             </div>
 
             <div className="input-container">
@@ -145,6 +188,8 @@ function CreatedActivity({ countries, createActivity }) {
                   ))}
                 </select>
               </div>
+              {errorSelectDifficulty && <p style={{color: 'red', fontSize: '14px'}}>{errorSelectDifficulty}</p>}
+              
             </div>
             
             <div className='input-container'>
@@ -164,6 +209,7 @@ function CreatedActivity({ countries, createActivity }) {
                     ))}
                 </select>
                 </div>
+                {errorSelectSeason && <p style={{color: 'red', fontSize: '14px'}}>{errorSelectSeason}</p>}
             </div>
 
             <div className="input-container">
@@ -183,6 +229,7 @@ function CreatedActivity({ countries, createActivity }) {
                   ))}
                 </select>
               </div>
+              {errorSelectCountryId && <p style={{color: 'red', fontSize: '14px'}}>{errorSelectCountryId}</p>}
             </div>
 
             <div className="input-container">
@@ -202,12 +249,25 @@ function CreatedActivity({ countries, createActivity }) {
                   ))}
                 </select>
               </div>
+              {errorSelectDuration && <p style={{color: 'red', fontSize: '14px'}}>{errorSelectDuration}</p>}
             </div>
                     
-
+            
 
             <div className='btn-create-container'>
-                <button type='submit' className='btn'>Create</button>
+                <button 
+                  type='submit' 
+                  className='btn' 
+                  disabled={ 
+                    error !== '' || 
+                    errorSelectDifficulty !== '' || 
+                    errorSelectSeason !== '' ||
+                    errorSelectDuration !== '' ||
+                    errorSelectCountryId !== ''
+                  }
+                >
+                  Create
+                </button>
             </div>            
 
           </div>
@@ -234,7 +294,7 @@ function CreatedActivity({ countries, createActivity }) {
                         >
                           X
                         </td>
-                      </tr>                      
+                       </tr>                      
                     ))
                   }
                 </tbody>

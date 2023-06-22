@@ -1,21 +1,19 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
-import { searchById } from '../Redux/actions';
+import { useNavigate, useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { deleteActivity, searchById } from '../Redux/actions';
 import MM from '../../assets/GIF_Mundo_Banderas.gif'
 import './Detail.css';
 
-function Detail({ countries }) {
+function Detail({ countries, deleteActivity, searchById }) {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  
+  const navigate = useNavigate()  
 
   useEffect(() => {
-    dispatch(searchById(id))
+    searchById(id)
   }, [searchById])
   
-  console.log(countries)
   const country = countries[0];
   const Name = country?.name.charAt(0).toUpperCase() + country?.name.slice(1);
   const Continent = country?.continent.charAt(0).toUpperCase() + country?.continent.slice(1);
@@ -23,6 +21,13 @@ function Detail({ countries }) {
   const SubRegion = country?.subregion.charAt(0).toUpperCase() + country?.subregion.slice(1);
 
   const activities = country?.Activities;
+
+  const handlerDeleteActivity = (id) => {
+    console.log(id)
+    deleteActivity(id)
+    alert('activity successfully deleted')
+    navigate('/home')
+  }
 
   return (
     <div className="cont-detail">
@@ -50,6 +55,7 @@ function Detail({ countries }) {
                           <th>Activity</th>
                           <th>Season</th>
                           <th>Duration</th>
+                          <th>Delete</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -62,8 +68,16 @@ function Detail({ countries }) {
                               </td>
                               <td>
                                 { activity.season }
-                              </td><td>
+                              </td>
+                              <td>
                                 { activity.duration } Hours
+                              </td>
+                              <td
+                                className='td-cursor'
+                                type="button"
+                                onClick={() => handlerDeleteActivity(activity.id)}
+                              >
+                                  X
                               </td>
                             </tr>                      
                           ))
@@ -108,7 +122,8 @@ Detail.propTypes = {
           ),
         })
     ),
-    searchById: PropTypes.func.isRequired
+    searchById: PropTypes.func.isRequired,
+    deleteActivity: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => {
@@ -119,7 +134,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        searchById: (id) => dispatch(searchById(id))
+        searchById: (id) => dispatch(searchById(id)),
+        deleteActivity: (id) => dispatch(deleteActivity(id))
     }
 }
 
