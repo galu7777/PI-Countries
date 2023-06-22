@@ -14,8 +14,8 @@ const postActivity = async(req, res) => {
         const createActivity = await Activity.create(newActivity);
         await createActivity.addCountries(CountryId);
 
-        const msg = ['Success']
-        return res.status(200).json(msg);
+        const activities = await Activity.findAll()
+        return res.status(200).json(activities);
     } catch (error) {
         return res.status(404).send({ message: error.message })
     }
