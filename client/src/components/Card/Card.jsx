@@ -17,6 +17,7 @@ function Card({ id, image_flag, name, continent}) {
             <img src={ image_flag } alt="flag" className='img'/>
         </div>
         <h2 className='text-card'>{ continent }</h2>
+        {/* <h2 className='text-card'>population: { formatPopulation }</h2> */}
     </div>
   )
 }
@@ -26,7 +27,7 @@ Card.propTypes = {
     image_flag: PropTypes.string,
     name: PropTypes.string,
     continent: PropTypes.string,
-    // population: PropTypes.string.isRequired,
+    population: PropTypes.string.isRequired,
 }
 
 export default Card;

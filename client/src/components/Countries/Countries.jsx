@@ -100,36 +100,54 @@ function Countries({
   return (
     <div className='container'>
       <h1 style={{ color: 'white', marginTop: '2%' }}>Home</h1>
-      <div className="container-select">
-        <div className="select">
-          <select onChange={handleOrder} className="select-origin">
-            <option value="default">default</option>
-            <option value="A">Ascendente</option>
-            <option value="D">Descendente</option>
-          </select>
+
+      <div className="input-container-full">
+        <div className='input-container'>
+          <label htmlFor="name" className="top-label">
+            Filter Population: 
+          </label>
+          <div className="select">
+            <select onChange={handleOrder} className="select-origin">
+              <option value="default">default</option>
+              <option value="A">Ascendente</option>
+              <option value="D">Descendente</option>
+            </select>
+          </div>
+        </div>
+        
+
+        <div className='input-container'>
+          <label htmlFor="name" className="top-label">
+            Filter Alphabetically: 
+          </label>
+          <div className='select'>
+            <select onChange={handleAlpha} className="select-origin">
+              <option value="default">default</option>
+              <option value="alfabeticamente">ordenar alfabeticamente</option>
+            </select>
+          </div>
         </div>
 
-        <div className='select'>
-          <select onChange={handleAlpha} className="select-origin">
-            <option value="default">default</option>
-            <option value="alfabeticamente">ordenar alfabeticamente</option>
-          </select>
+        <div className="input-container">
+         <label htmlFor="name" className="top-label">
+            Filter Continents and Activities: 
+          </label>
+          <div className='select'>
+            <select onChange={handleFilter} className="select-origin">
+              <option value="default">default</option>
+              <option value="asia">asia</option>
+              <option value="europe">europe</option>
+              <option value="oceania">oceania</option>
+              <option value="africa">africa</option>
+              <option value="north america">north america</option>
+              <option value="south america">south america</option>
+              <option value="antarctica">antarctica</option>
+              <option value="allCountries">all Countries</option>
+              <option value="activity">Activity</option>
+            </select>
+          </div>
         </div>
 
-        <div className="select">
-          <select onChange={handleFilter} className="select-origin">
-            <option value="default">default</option>
-            <option value="asia">asia</option>
-            <option value="europe">europe</option>
-            <option value="oceania">oceania</option>
-            <option value="africa">africa</option>
-            <option value="north america">north america</option>
-            <option value="south america">south america</option>
-            <option value="antarctica">antarctica</option>
-            <option value="allCountries">all Countries</option>
-            <option value="activity">Activity</option>
-          </select>
-        </div>
         <NavLink to='/created' element={<CreatedActivity/>}>
           <button className='btn-search'>Create Activity</button>
         </NavLink>
@@ -142,6 +160,7 @@ function Countries({
             image_flag={country.image_flag}
             name={country.name}
             continent={country.continent}
+            population={country.population}
           />
         ))}
       </div>
@@ -169,11 +188,12 @@ Countries.propTypes = {
       image_flag: PropTypes.string,
       name: PropTypes.string,
       continent: PropTypes.string,
+      population: PropTypes.string,
     })
   ),
   currentPage: PropTypes.number.isRequired,
   pageSize: PropTypes.number.isRequired,
-  setCurrentPage: PropTypes.number.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
   totalPages: PropTypes.number.isRequired,
   getCountries: PropTypes.func.isRequired,
   nextPage: PropTypes.func.isRequired,
