@@ -124,6 +124,7 @@ function Countries({
             <select onChange={handleAlpha} className="select-origin">
               <option value="default">default</option>
               <option value="alfabeticamente">ordenar alfabeticamente</option>
+              <option value="Z A">Z A</option>
             </select>
           </div>
         </div>

@@ -119,7 +119,11 @@ import {
   
         if (payload === "alfabeticamente") {
           orderedCountries.sort((a, b) => a.name.localeCompare(b.name));
+        } else if ( payload === "Z A"){
+          orderedCountries.sort((a, b) => b.name.localeCompare(a.name))
         }
+
+
   
         return {
           ...state,
